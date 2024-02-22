@@ -3,7 +3,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom'; // Import useHistory hook
-import FacebookLogin from 'react-facebook-login'; 
+import FacebookLogin from '@greatsumini/react-facebook-login';
 
 import '../index.css';
 
