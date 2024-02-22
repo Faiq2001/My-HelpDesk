@@ -1,0 +1,127 @@
+body {
+  font-family: 'Roboto Light', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(0, 85, 177);
+}
+
+/*.app {
+}*/
+
+.messenger-page-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.chat-list-container {
+  flex: 1;
+  padding: 20px;
+}
+
+.chat-box-container {
+  flex: 3;
+  padding: 20px;
+}
+
+.chat-box {
+  border-radius: 10px;
+  background-color: white;
+  padding: 20px;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.chat-header h2 {
+  margin: 0;
+}
+
+.chat-actions button {
+  margin-left: 10px;
+}
+
+.chat-messages {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.customer-details-dialog {
+  border-top: 1px solid #ccc;
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+.customer-details-dialog h3 {
+  margin-bottom: 10px;
+}
+
+.customer-details-dialog link {
+  color: blue;
+  text-decoration: underline;
+}
+
+.dialog-box {
+  border-radius: 10px;
+  background-color: white;
+  color: rgb(0, 0, 0);
+  padding: 20px;
+  max-width: 400px; /* Adjust as needed */
+  width: 100%;
+}
+
+.dialog-box h1 {
+  text-align: center;
+  font-size: medium;
+}
+
+.dialog-box label {
+  font-size: small;
+  display: block;
+  margin-bottom: 2.5px;
+}
+
+.dialog-box input {
+  width: 90%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+input[type="checkbox"] {
+  display: inline-block;
+  width: auto;
+}
+  
+.last-line {
+  text-align: center;
+  font-size: smaller;
+}
+
+.square-button {
+  width: 97%;
+  padding: 8px;
+  margin-top: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: rgb(0, 85, 177);
+  color: white;
+}
+
+.delete-button {
+  background-color: rgb(255, 85, 70);
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Add more styles as needed */
