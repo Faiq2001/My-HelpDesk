@@ -11,7 +11,7 @@ const facebookWebhookRoutes = require('./routes/facebookWebhook'); // Import Fac
 const Message = require('./models/Message'); // Import Message model
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 
 // Middleware
 app.use(cors()); // Enable CORS for all routes

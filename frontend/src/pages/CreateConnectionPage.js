@@ -15,7 +15,7 @@ const CreateConnectionPage = () => {
     console.log(response);
 
     // Send the access token to the backend
-    axios.post('http://localhost:4000/webhook', { accessToken: response.accessToken })
+    axios.post('https://myhelpdesk.onrender.com/webhook', { accessToken: response.accessToken })
       .then((res) => {
         console.log('Access token sent to backend:', res.data);
 
