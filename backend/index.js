@@ -5,9 +5,12 @@ const cors = require('cors'); // Import the cors package
 
 require('dotenv').config();
 
+//Import Routes
 const registrationRoutes = require('./routes/registration');
 const loginRoutes = require('./routes/login');
-const facebookWebhookRoutes = require('./routes/facebookWebhook'); // Import Facebook webhook routes
+const facebookWebhookRoutes = require('./routes/facebookWebhook'); 
+
+
 const Message = require('./models/Message'); // Import Message model
 
 const app = express();

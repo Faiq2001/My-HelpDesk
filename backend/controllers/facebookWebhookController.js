@@ -2,7 +2,8 @@ const Message = require('../models/Message');
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
 exports.verifyWebhook = (req, res) => {
-    // Get query parameters from request
+    console.log("GET REQUEST RAN SUCCESSFULLY")
+    //Get query parameters from request
     const mode = req.query['hub.mode'];
     const token = req.query['hub.verify_token'];
     const challenge = req.query['hub.challenge'];

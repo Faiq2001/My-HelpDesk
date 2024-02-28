@@ -5,9 +5,18 @@ const ConnectFBPage = () => {
   const history = useHistory();
 
   const handleConnect = () => {
-    // Handle connect to FB logic here
-    console.log('Connecting to Facebook...');
-    history.push('/create-connect')
+    // Initiate Facebook login process
+    if (window.FB) {
+      window.FB.login(response => {
+        if (response.authResponse) {
+          console.log('User logged in successfully:', response);
+          // Redirect to delete-integration page
+          history.push('/delete-integration');
+        } else {
+          console.log('User cancelled login or did not fully authorize.');
+        }
+      });
+    };
   };
 
   return (
@@ -16,6 +25,6 @@ const ConnectFBPage = () => {
       <button type="button" className="square-button" onClick={handleConnect}>Connect Page</button>
     </div>
   );
-}
+};
 
 export default ConnectFBPage;
