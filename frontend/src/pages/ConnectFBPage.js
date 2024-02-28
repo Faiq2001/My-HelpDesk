@@ -36,14 +36,17 @@ const ConnectFBPage = () => {
         } else {
           console.log('User cancelled login or did not fully authorize.');
         }
-      });
+      }, {scope: 'public_profile,email'});
     }
   };
 
   return (
     <div className="dialog-box connect-fb-page">
       <h1>Facebook Page Integration</h1>
-      <button type="button" className="square-button" onClick={handleConnect}>Connect Page</button>
+      {/* Facebook login button */}
+      <div id="fb-root"></div>
+      <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v19.0&appId=788371886528778" nonce="7h2RD9gP"></script>
+      <div className="fb-login-button" data-width="97%" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-as="true" onClick={handleConnect}></div>
     </div>
   );
 };

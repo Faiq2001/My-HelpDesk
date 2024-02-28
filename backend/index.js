@@ -8,7 +8,7 @@ require('dotenv').config();
 //Import Routes
 const registrationRoutes = require('./routes/registration');
 const loginRoutes = require('./routes/login');
-const facebookWebhookRoutes = require('./routes/facebookWebhook'); 
+// const facebookWebhookRoutes = require('./routes/facebookWebhook'); 
 
 
 const Message = require('./models/Message'); // Import Message model
@@ -33,6 +33,6 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 // Routes
 app.use(registrationRoutes);
 app.use(loginRoutes);
-app.use(facebookWebhookRoutes);
+// app.use(facebookWebhookRoutes);
 
 module.exports = app;

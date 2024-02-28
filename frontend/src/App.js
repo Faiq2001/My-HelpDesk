@@ -10,7 +10,6 @@ import LoginPage from './pages/LoginPage';
 import ConnectFBPage from './pages/ConnectFBPage';
 import CreateConnectionPage from './pages/CreateConnectionPage';
 import DeleteIntegrationPage from './pages/DeleteIntegrationPage';
-import MessengerPage from './pages/MessengerPage';
 
 
 function App() {
@@ -23,7 +22,7 @@ function App() {
           <Route path="/connect-fb-page" component={ConnectFBPage} />
           <Route path="/create-connect" component={CreateConnectionPage} />
           <Route path="/delete-integration" component={DeleteIntegrationPage} />
-          <Route path="/messenger" component={MessengerPage} />
+          {/* <Route path="/messenger" component={MessengerPage} /> */}
         </Switch>
       </div>
     </Router>
