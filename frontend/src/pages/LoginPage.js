@@ -9,8 +9,8 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:4000/login', { email, password });
-      // const response = await axios.post('https://myhelpdesk.onrender.com/login', { email, password });
+      // const response = await axios.post('http://localhost:4000/login', { email, password });
+      const response = await axios.post('https://myhelpdesk.onrender.com/login', { email, password });
       console.log(response.data);
       // Redirect to ConnectFBPage on successful login
       window.location.href = '/connect-fb-page';

@@ -10,8 +10,8 @@ const RegistrationPage = () => {
 
   const handleSignUp = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/", { name, email, password });
-      // const response = await axios.post("https://myhelpdesk.onrender.com/", { name, email, password });
+      // const response = await axios.post("http://localhost:4000/", { name, email, password });
+      const response = await axios.post("https://myhelpdesk.onrender.com/", { name, email, password });
       if (response && response.data) {
         console.log(response.data);
         // Redirect to login page on successful registration
