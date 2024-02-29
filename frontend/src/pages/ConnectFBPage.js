@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import fbIcon from '../fb-icon.png';
 
 const ConnectFBPage = () => {
   const history = useHistory();
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState('');
+  
   useEffect(() => {
     // Load the Facebook SDK asynchronously
     window.fbAsyncInit = function () {
@@ -12,6 +15,15 @@ const ConnectFBPage = () => {
         cookie: true,
         xfbml: true,
         version: 'v19.0' // Use the version of the Graph API you want to use
+      });
+
+      // Check if the user is already logged in
+      window.FB.getLoginStatus(function (response) {
+        if (response.status === 'connected') {
+          setIsLoggedIn(true);
+          // Fetch user's name
+          fetchUserData();
+        }
       });
     };
 
@@ -25,28 +37,48 @@ const ConnectFBPage = () => {
     }(document, 'script', 'facebook-jssdk'));
   }, []);
 
+  const fetchUserData = () => {
+    window.FB.api('/me', 'GET', { fields: 'name,picture' }, function (response) {
+      console.log(response);
+      setUserName(response.name);
+    });
+  };
+
   const handleConnect = () => {
     // Initiate Facebook login process
     if (window.FB) {
       window.FB.login(response => {
         if (response.authResponse) {
           console.log('User logged in successfully:', response);
+          setIsLoggedIn(true);
+          // Fetch user's name
+          fetchUserData();
           // Redirect to delete-integration page
-          history.push('/delete-integration');
         } else {
           console.log('User cancelled login or did not fully authorize.');
         }
-      }, {scope: 'public_profile,email'});
+      }, { scope: 'public_profile,email' });
     }
   };
+
+  const handleContinue = () =>{
+    history.push('/delete-integration');
+  }
 
   return (
     <div className="dialog-box connect-fb-page">
       <h1>Facebook Page Integration</h1>
-      {/* Facebook login button */}
-      <div id="fb-root"></div>
-      <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v19.0&appId=788371886528778" nonce="7h2RD9gP"></script>
-      <div className="fb-login-button" data-width="97%" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-as="true" onClick={handleConnect}></div>
+      
+      {isLoggedIn ? (
+        <button type="button" className="profile-button" onClick={handleContinue}>
+          Continue as {userName}
+        </button>
+      ) : (
+        <button type="button" className="square-button" onClick={handleConnect}>
+          <img src={fbIcon} alt="Facebook Icon" />Login to Facebook
+        </button>
+      )}
+      
     </div>
   );
 };

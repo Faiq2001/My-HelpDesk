@@ -6,7 +6,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: rgb(0, 85, 177);
+  background-color: rgb(24, 119, 242);
 }
 
 /*.app {
@@ -64,7 +64,7 @@ body {
 }
 
 .customer-details-dialog link {
-  color: blue;
+  color: rgb(24, 119, 242);
   text-decoration: underline;
 }
 
@@ -105,14 +105,30 @@ input[type="checkbox"] {
   font-size: smaller;
 }
 
-.square-button {
+.square-button, .profile-button {
   width: 97%;
   padding: 8px;
   margin-top: 20px;
   border-radius: 5px;
   margin-bottom: 20px;
-  background-color: rgb(0, 85, 177);
+  background-color: rgb(24, 119, 242);
   color: white;
+  position: relative;
+}
+
+.square-button img {
+  position: absolute; /* Position the image within the button */
+  top: 50%; /* Align the image vertically */
+  left: 30px; /* Add some left padding to the image */
+  transform: translateY(-60%); /* Center the image vertically */
+  width: 20px; /* Set the width of the image */
+  height: 20px; /* Set the height of the image */
+  border-radius: 50%; /* Make the image circular */
+  margin-right: 10px; /* Add some right margin to separate the image from text */
+}
+
+.square-button span {
+  padding-left: 35px; /* Adjust the left padding to accommodate the image */
 }
 
 .delete-button {
