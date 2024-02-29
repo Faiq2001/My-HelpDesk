@@ -1,6 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const DeleteIntegrationPage = () => {
+  const history = useHistory();
+
   const handleDeleteIntegration = () => {
     // Handle delete integration logic here
     console.log('Deleting integration...');
@@ -8,6 +11,10 @@ const DeleteIntegrationPage = () => {
 
   const handleReplyToMessages = () => {
     // Handle reply to messages logic here
+    history.push({
+      pathname: '/messenger',
+      state: { userAccessToken: history.location.state.userAccessToken } // Pass the user access token to Messenger.js
+    });
     console.log('Replying to messages...');
   };
 

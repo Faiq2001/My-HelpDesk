@@ -6,7 +6,8 @@ const ConnectFBPage = () => {
   const history = useHistory();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
-  
+  const [userAccessToken, setUserAccessToken] = useState('');
+
   useEffect(() => {
     // Load the Facebook SDK asynchronously
     window.fbAsyncInit = function () {
@@ -41,6 +42,7 @@ const ConnectFBPage = () => {
     window.FB.api('/me', 'GET', { fields: 'name,picture' }, function (response) {
       console.log(response);
       setUserName(response.name);
+      setUserAccessToken(window.FB.getAuthResponse().accessToken);
     });
   };
 
@@ -62,7 +64,10 @@ const ConnectFBPage = () => {
   };
 
   const handleContinue = () =>{
-    history.push('/delete-integration');
+    history.push({
+      pathname: '/delete-integration',
+      state: { userAccessToken } // Pass userAccessToken as state to DeleteIntegrationPage.js
+    });
   }
 
   return (
