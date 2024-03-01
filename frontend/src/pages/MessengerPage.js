@@ -5,11 +5,11 @@ const MessengerPage = () => {
   const history = useHistory();
   const [pageId, setPageId] = useState('');
   const [pageAccessToken, setPageAccessToken] = useState('');
-  const [psid, setPsid] = useState('');
-  const [conversationId, setConversationId] = useState('');
-  const [messageId, setMessageId] = useState('');
+//   const [psid, setPsid] = useState('');
+//   const [conversationId, setConversationId] = useState('');
+//   const [messageId, setMessageId] = useState('');
   const [chats, setChats] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [selectedChat, setSelectedChat] = useState(null);
   
   useEffect(() => {
     // if (!history.location.state || !history.location.state.userAccessToken) {
@@ -49,34 +49,58 @@ const MessengerPage = () => {
   const fetchChats = async () => {
     try {
       const response = await fetch(`https://graph.facebook.com/v19.0/${pageId}/conversations?fields=participants,messages{id,message}&access_token=${pageAccessToken}`);
-      const data = await response.json();
-      if (data && data.data && data.data.length > 0) {
-        setPsid(data.data[0].participants.data[0].id);
-        setConversationId(data.data[0].id);
-        setMessageId(data.data[0].messages.data[0].id);
-        setChats(data.data);
-        setLoading('False');
+      const responseData = await response.json();
+      if (responseData && responseData.data && responseData.data.length > 0) {
+        // setPsid(data.data[0].participants.data[0].id);
+        // setConversationId(data.data[0].id);
+        // setMessageId(data.data[0].messages.data[0].id);
+        setChats(responseData.data);
+        setSelectedChat(responseData.data[0]);
       }
     } catch (error) {
       console.error('Error fetching chats:', error);
     }
   };
 
+  const selectChat = (chat) => {
+    setSelectedChat(chat);
+  };
+
+  useEffect(() => {
+        console.log(chats);
+        console.log(selectedChat);
+  }, [chats,selectedChat]);
+
+  
   return (
     <div className="messenger-page-container">
       <div className="chat-list-container">
         <h2>Chats</h2>
-        {loading ? ( 
-          // Render loading indicator while chats are being fetched
-          <p>Loading chats...</p>
-        ) : (
-          <ul>
-            {chats.map((chat) => (
-              <li key={chat.id}>
-                {chat.title}
-              </li>
-            ))}
-          </ul>
+        <ul>
+          {chats.map((chat) => (
+            <li key={chat.id} onClick={() => selectChat(chat)}>
+              {chat.participants.data.map((participant) => participant.name).join(', ')}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="selected-chat-container">
+        <h2>Selected Chat</h2>
+        {selectedChat && (
+          <div>
+            <h3>Participants:</h3>
+            <ul>
+              {selectedChat.participants.data.map((participant) => (
+                <li key={participant.id}>{participant.name}</li>
+              ))}
+            </ul>
+            <h3>Messages:</h3>
+            <ul>
+              {selectedChat.messages.data.map((message) => (
+                <li key={message.id}>{message.message}</li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </div>
