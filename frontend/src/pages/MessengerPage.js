@@ -57,11 +57,11 @@ const MessengerPage = () => {
         // setMessageId(data.data[0].messages.data[0].id);
         console.log(responseData);
         console.log(responseData.data);
-        setChats(responseData.data[0]);
+        setChats(responseData.data);
 
         const chatMapObj = {};
         responseData.data.forEach(chat => {
-            const id = chat.participants.id;
+            const id = chat.id;
             const name = chat.participants.data[0].name;
             const messages = chat.messages.data;
             chatMapObj[id] = { name, messages };
