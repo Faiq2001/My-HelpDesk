@@ -55,6 +55,8 @@ const MessengerPage = () => {
         // setPsid(data.data[0].participants.data[0].id);
         // setConversationId(data.data[0].id);
         // setMessageId(data.data[0].messages.data[0].id);
+        console.log(responseData);
+        console.log(responseData.data);
         setChats(responseData.data[0]);
 
         const chatMapObj = {};
