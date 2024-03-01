@@ -5,12 +5,10 @@ const MessengerPage = () => {
   const history = useHistory();
   const [pageId, setPageId] = useState('');
   const [pageAccessToken, setPageAccessToken] = useState('');
-//   const [psid, setPsid] = useState('');
-//   const [conversationId, setConversationId] = useState('');
-//   const [messageId, setMessageId] = useState('');
   const [chats, setChats] = useState([]);
   const [selectedChatId, setSelectedChatId] = useState(null);
   const [chatMap, setChatMap] = useState({});
+  const [messageText, setMessageText] = useState('');
 
   useEffect(() => {
     // if (!history.location.state || !history.location.state.userAccessToken) {
@@ -31,7 +29,6 @@ const MessengerPage = () => {
       if (data && data.data && data.data.length > 0) {
         setPageId(data.data[0].id);
         setPageAccessToken(data.data[0].access_token);
-        console.log(data.data[0]);
       }
     } catch (error) {
       console.error('Error fetching page info:', error);
@@ -40,8 +37,6 @@ const MessengerPage = () => {
 
   // Once pageId and PageAccessToken is fetched, then only Fetch PSID and Conversation ID
   useEffect(() => {
-    console.log(pageId);
-    console.log(pageAccessToken);         
     if (pageId && pageAccessToken) {
       fetchChats();
     }
@@ -52,11 +47,6 @@ const MessengerPage = () => {
       const response = await fetch(`https://graph.facebook.com/v19.0/${pageId}/conversations?fields=participants,messages{id,message}&access_token=${pageAccessToken}`);
       const responseData = await response.json();
       if (responseData && responseData.data && responseData.data.length > 0) {
-        // setPsid(data.data[0].participants.data[0].id);
-        // setConversationId(data.data[0].id);
-        // setMessageId(data.data[0].messages.data[0].id);
-        console.log(responseData);
-        console.log(responseData.data);
         setChats(responseData.data);
 
         const chatMapObj = {};
@@ -68,20 +58,41 @@ const MessengerPage = () => {
             chatMapObj[id] = { name, messages };
         });
         setChatMap(chatMapObj);
-
-        // setSelectedChat(responseData.data[0]);
       }
     } catch (error) {
       console.error('Error fetching chats:', error);
     }
   };
 
-  useEffect(() => {
-    console.log(chats);
-  }, [chats]);
-
   const selectChat = (chatId) => {
     setSelectedChatId(chatId);
+  };
+
+//   useEffect(() => {
+//     console.log(chats);
+//   }, [chats]);
+
+  const sendMessage = async () => {
+    try {
+      const response = await fetch(`https://graph.facebook.com/v19.0/${pageId}/messages`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          recipient: { id: selectedChatId },
+          message: { text: messageText },
+          messaging_type: 'RESPONSE',
+          access_token: pageAccessToken
+        })
+      });
+      const responseData = await response.json();
+      console.log(responseData);
+      // Clear the message text box after sending
+      setMessageText('');
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
   };
 
   return (
@@ -106,6 +117,15 @@ const MessengerPage = () => {
                 <li key={message.id}>{message.message}</li>
               )).reverse()} {/* Display messages in descending order */}
             </ul>
+            <div>
+              <input
+                type="text"
+                value={messageText}
+                onChange={(e) => setMessageText(e.target.value)}
+                placeholder="Type your message..."
+              />
+              <button onClick={sendMessage}>Send</button>
+            </div>
           </div>
         )}
       </div>
