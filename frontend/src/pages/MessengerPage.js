@@ -22,11 +22,14 @@ const MessengerPage = () => {
 
   const fetchPageInfo = async () => {
     try {
-      const response = await fetch(`https://graph.facebook.com/v19.0/me/accounts?access_token=${history.location.state.userAccessToken}`);
+      const userAccessToken = history.location.state.userAccessToken;
+      console.log(userAccessToken);
+      const response = await fetch(`https://graph.facebook.com/v19.0/me/accounts?access_token=${userAccessToken}`);
       const data = await response.json();
       if (data && data.data && data.data.length > 0) {
         setPageId(data.data[0].id);
         setPageAccessToken(data.data[0].access_token);
+        console.log(data.data[0]);
         console.log(pageId);
         console.log(pageAccessToken);
         // Fetch PSID and Conversation ID
