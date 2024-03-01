@@ -9,6 +9,7 @@ const MessengerPage = () => {
   const [conversationId, setConversationId] = useState('');
   const [messageId, setMessageId] = useState('');
   const [chats, setChats] = useState([]);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
     // if (!history.location.state || !history.location.state.userAccessToken) {
@@ -64,13 +65,18 @@ const MessengerPage = () => {
     <div className="messenger-page-container">
       <div className="chat-list-container">
         <h2>Chats</h2>
-        <ul>
-          {chats.map((chat) => (
-            <li key={chat.id}>
-              {chat.title}
-            </li>
-          ))}
-        </ul>
+        {loading ? ( 
+          // Render loading indicator while chats are being fetched
+          <p>Loading chats...</p>
+        ) : (
+          <ul>
+            {chats.map((chat) => (
+              <li key={chat.id}>
+                {chat.title}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
