@@ -55,7 +55,7 @@ const MessengerPage = () => {
         // setPsid(data.data[0].participants.data[0].id);
         // setConversationId(data.data[0].id);
         // setMessageId(data.data[0].messages.data[0].id);
-        setChats(responseData.data);
+        setChats(responseData.data[0]);
 
         const chatMapObj = {};
         responseData.data.forEach(chat => {
@@ -88,7 +88,7 @@ const MessengerPage = () => {
         <ul>
             {Object.entries(chatMap).map(([id, chat]) => (
                 <li key={id} onClick={() => selectChat(id)}>
-                <strong>{chat.name}</strong>
+                {chat.name}
                 </li>
             ))}
         </ul>
