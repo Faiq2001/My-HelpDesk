@@ -27,6 +27,8 @@ const MessengerPage = () => {
       if (data && data.data && data.data.length > 0) {
         setPageId(data.data[0].id);
         setPageAccessToken(data.data[0].access_token);
+        console.log(pageId);
+        console.log(pageAccessToken);
         // Fetch PSID and Conversation ID
         fetchChats();
       }
