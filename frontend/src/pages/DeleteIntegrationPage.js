@@ -11,9 +11,11 @@ const DeleteIntegrationPage = () => {
 
   const handleReplyToMessages = () => {
     // Handle reply to messages logic here
+    const userAccessToken = history.location.state.userAccessToken;
+    console.log(userAccessToken);
     history.push({
       pathname: '/messenger',
-      state: { userAccessToken: history.location.state.userAccessToken } // Pass the user access token to Messenger.js
+      state: { userAccessToken: userAccessToken } // Pass the user access token to Messenger.js
     });
     console.log('Replying to messages...');
   };

@@ -11,7 +11,8 @@ const MessengerPage = () => {
   const [chats, setChats] = useState([]);
   
   useEffect(() => {
-    if (!history.location.state || !history.location.state.userAccessToken) {
+    // if (!history.location.state || !history.location.state.userAccessToken) {
+    if(!window.FB){
       history.push('/connect-fb-page');
     } else {
       // Fetch Page ID and Page Access Token

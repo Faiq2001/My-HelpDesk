@@ -66,7 +66,7 @@ const ConnectFBPage = () => {
   const handleContinue = () =>{
     history.push({
       pathname: '/delete-integration',
-      state: { userAccessToken } // Pass userAccessToken as state to DeleteIntegrationPage.js
+      state: { userAccessToken } // Pass userAccessToken as state to Messenger.js
     });
   }
 
