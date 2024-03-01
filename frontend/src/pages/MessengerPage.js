@@ -31,14 +31,19 @@ const MessengerPage = () => {
         setPageAccessToken(data.data[0].access_token);
         console.log(data.data[0]);
         console.log(pageId);
-        console.log(pageAccessToken);
-        // Fetch PSID and Conversation ID
-        fetchChats();
+        console.log(pageAccessToken);         
       }
     } catch (error) {
       console.error('Error fetching page info:', error);
     }
   }
+
+  // Once pageId and PageAccessToken is fetched, then only Fetch PSID and Conversation ID
+  useEffect(() => {
+    if (pageId && pageAccessToken) {
+      fetchChats();
+    }
+  }, [pageId, pageAccessToken]);
 
   const fetchChats = async () => {
     try {
