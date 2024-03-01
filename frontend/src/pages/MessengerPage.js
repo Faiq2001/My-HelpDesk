@@ -55,6 +55,7 @@ const MessengerPage = () => {
         setConversationId(data.data[0].id);
         setMessageId(data.data[0].messages.data[0].id);
         setChats(data.data);
+        setLoading('False');
       }
     } catch (error) {
       console.error('Error fetching chats:', error);
