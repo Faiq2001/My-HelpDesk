@@ -9,8 +9,9 @@ const MessengerPage = () => {
 //   const [conversationId, setConversationId] = useState('');
 //   const [messageId, setMessageId] = useState('');
   const [chats, setChats] = useState([]);
-  const [selectedChat, setSelectedChat] = useState(null);
-  
+  const [selectedChatId, setSelectedChatId] = useState(null);
+  const [chatMap, setChatMap] = useState({});
+
   useEffect(() => {
     // if (!history.location.state || !history.location.state.userAccessToken) {
     if(!window.FB){
@@ -55,50 +56,52 @@ const MessengerPage = () => {
         // setConversationId(data.data[0].id);
         // setMessageId(data.data[0].messages.data[0].id);
         setChats(responseData.data);
-        setSelectedChat(responseData.data[0]);
+
+        const chatMapObj = {};
+        responseData.data.forEach(chat => {
+            const id = chat.participants.id;
+            const name = chat.participants.data[0].name;
+            const messages = chat.messages.data;
+            chatMapObj[id] = { name, messages };
+        });
+        setChatMap(chatMapObj);
+
+        // setSelectedChat(responseData.data[0]);
       }
     } catch (error) {
       console.error('Error fetching chats:', error);
     }
   };
 
-  const selectChat = (chat) => {
-    setSelectedChat(chat);
+  useEffect(() => {
+    console.log(chats);
+  }, [chats]);
+
+  const selectChat = (chatId) => {
+    setSelectedChatId(chatId);
   };
 
-  useEffect(() => {
-        console.log(chats);
-        console.log(selectedChat);
-  }, [chats,selectedChat]);
-
-  
   return (
     <div className="messenger-page-container">
       <div className="chat-list-container">
         <h2>Chats</h2>
         <ul>
-          {chats.map((chat) => (
-            <li key={chat.id} onClick={() => selectChat(chat)}>
-              {chat.participants.data.map((participant) => participant.name).join(', ')}
-            </li>
-          ))}
+            {Object.entries(chatMap).map(([id, chat]) => (
+                <li key={id} onClick={() => selectChat(id)}>
+                <strong>{chat.name}</strong>
+                </li>
+            ))}
         </ul>
       </div>
       <div className="selected-chat-container">
         <h2>Selected Chat</h2>
-        {selectedChat && (
+        {selectedChatId && (
           <div>
-            <h3>Participants:</h3>
+            <h3>{chatMap[selectedChatId].name}</h3>
             <ul>
-              {selectedChat.participants.data.map((participant) => (
-                <li key={participant.id}>{participant.name}</li>
-              ))}
-            </ul>
-            <h3>Messages:</h3>
-            <ul>
-              {selectedChat.messages.data.map((message) => (
+              {chatMap[selectedChatId].messages.map((message) => (
                 <li key={message.id}>{message.message}</li>
-              ))}
+              )).reverse()} {/* Display messages in descending order */}
             </ul>
           </div>
         )}
