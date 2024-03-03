@@ -51,7 +51,7 @@ const MessengerPage = () => {
 
         const chatMapObj = {};
         responseData.data.forEach(chat => {
-            const id = chat.id;
+            const id = chat.participants.data[0].id;
             const name = chat.participants.data[0].name;
             const messages = chat.messages.data;
             if(!selectedChatId)     selectChat(id);
