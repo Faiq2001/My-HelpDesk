@@ -56,6 +56,7 @@ const MessengerPage = () => {
             const messages = chat.messages.data;
             if(!selectedChatId)     selectChat(id);
             chatMapObj[id] = { name, messages };
+            console.log(chat);
             console.log(id);
         });
         setChatMap(chatMapObj);
