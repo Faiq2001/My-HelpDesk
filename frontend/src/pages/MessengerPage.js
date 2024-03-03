@@ -112,6 +112,7 @@ const MessengerPage = () => {
         {selectedChatId && (
           <div>
             <h3>{chatMap[selectedChatId].name}</h3>
+            console.log(selectedChatId);
             <ul>
               {chatMap[selectedChatId].messages.map((message) => (
                 <li key={message.id}>{message.message}</li>
