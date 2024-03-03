@@ -8,7 +8,7 @@ exports.verifyWebhook = (req, res) => {
     const challenge = req.query['hub.challenge'];
 
     // Check if mode and token parameters exist and match the VERIFY_TOKEN
-    if (mode && token === VERIFY_TOKEN) {
+    if (mode === "subscribe" && token === VERIFY_TOKEN) {
         // Respond with the challenge to complete the verification
         res.status(200).send(challenge);
         console.log("GET REQUEST RAN SUCCESSFULLY");
@@ -20,6 +20,15 @@ exports.verifyWebhook = (req, res) => {
 
 
 exports.handleIncomingMessage = (req, res) => {
+    // Verify request signature
+    try {
+        verifyRequestSignature(req, res, req.rawBody);
+    } catch (error) {
+        console.error('Error verifying request signature:', error);
+        res.sendStatus(403); // Respond with forbidden status if signature verification fails
+        return;
+    }
+
     // Extract necessary data from req.body
     const { senderId, recipientId, message } = req.body;
 
@@ -46,3 +55,23 @@ exports.handleIncomingMessage = (req, res) => {
     //         res.sendStatus(500);
     //     });
 };
+
+// Verify request signature
+function verifyRequestSignature(req, res, buf) {
+    const signature = req.headers['x-hub-signature-256'];
+
+    if (!signature) {
+        throw new Error(`Couldn't find "x-hub-signature-256" in headers.`);
+    }
+
+    const elements = signature.split('=');
+    const signatureHash = elements[1];
+    const expectedHash = crypto
+        .createHmac('sha256', process.env.APP_SECRET) // Replace 'APP_SECRET' with your actual app secret
+        .update(buf)
+        .digest('hex');
+
+    if (signatureHash !== expectedHash) {
+        throw new Error(`Couldn't validate the request signature.`);
+    }
+}
