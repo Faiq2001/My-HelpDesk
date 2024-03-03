@@ -8,7 +8,6 @@ import './index.css';
 import RegistrationPage from './pages/RegistrationPage';
 import LoginPage from './pages/LoginPage';
 import ConnectFBPage from './pages/ConnectFBPage';
-import CreateConnectionPage from './pages/CreateConnectionPage';
 import DeleteIntegrationPage from './pages/DeleteIntegrationPage';
 import MessengerPage from './pages/MessengerPage';
 
@@ -21,7 +20,6 @@ function App() {
           <Route path="/" exact component={RegistrationPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/connect-fb-page" component={ConnectFBPage} />
-          <Route path="/create-connect" component={CreateConnectionPage} />
           <Route path="/delete-integration" component={DeleteIntegrationPage} />
           <Route path="/messenger" component={MessengerPage} />
         </Switch>
