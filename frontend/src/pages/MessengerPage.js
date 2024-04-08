@@ -92,6 +92,7 @@ const MessengerPage = () => {
       console.log(responseData);
       // Clear the message text box after sending
       setMessageText('');
+      fetchChats();
     } catch (error) {
       console.error('Error sending message:', error);
     }
